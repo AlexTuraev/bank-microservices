@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Annotation profile for exchange-app" enabled="true">
+      <profile name="Annotation profile for exchgenerator-app" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -14,6 +14,7 @@
         <module name="cash-app" />
         <module name="transfer-app" />
         <module name="accounts-app" />
+        <module name="exchgenerator-app" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -25,6 +26,7 @@
       <module name="accounts-app" options="-parameters" />
       <module name="cash-app" options="-parameters" />
       <module name="exchange-app" options="-parameters" />
+      <module name="exchgenerator-app" options="-parameters" />
       <module name="frontui-app" options="-parameters" />
       <module name="template-app" options="-parameters" />
       <module name="transfer-app" options="-parameters" />

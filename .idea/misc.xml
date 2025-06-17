@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/cash-app/pom.xml" />
         <option value="$PROJECT_DIR$/transfer-app/pom.xml" />
         <option value="$PROJECT_DIR$/exchange-app/pom.xml" />
+        <option value="$PROJECT_DIR$/exchgenerator-app/pom.xml" />
       </list>
     </option>
   </component>
