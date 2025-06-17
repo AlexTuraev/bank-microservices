@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Annotation profile for blocker-app" enabled="true">
+      <profile name="Annotation profile for notifications-app" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -15,6 +15,7 @@
         <module name="blocker-app" />
         <module name="frontui-app" />
         <module name="cash-app" />
+        <module name="notifications-app" />
         <module name="accounts-app" />
       </profile>
     </annotationProcessing>
@@ -30,6 +31,7 @@
       <module name="exchange-app" options="-parameters" />
       <module name="exchgenerator-app" options="-parameters" />
       <module name="frontui-app" options="-parameters" />
+      <module name="notifications-app" options="-parameters" />
       <module name="template-app" options="-parameters" />
       <module name="transfer-app" options="-parameters" />
     </option>
