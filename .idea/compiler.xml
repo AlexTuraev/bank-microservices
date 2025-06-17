@@ -2,19 +2,20 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Annotation profile for exchgenerator-app" enabled="true">
+      <profile name="Annotation profile for blocker-app" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="frontui-app" />
         <module name="exchange-app" />
-        <module name="cash-app" />
         <module name="transfer-app" />
-        <module name="accounts-app" />
         <module name="exchgenerator-app" />
+        <module name="blocker-app" />
+        <module name="frontui-app" />
+        <module name="cash-app" />
+        <module name="accounts-app" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="accounts-app" options="-parameters" />
+      <module name="blocker-app" options="-parameters" />
       <module name="cash-app" options="-parameters" />
       <module name="exchange-app" options="-parameters" />
       <module name="exchgenerator-app" options="-parameters" />

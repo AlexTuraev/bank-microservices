@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/transfer-app/pom.xml" />
         <option value="$PROJECT_DIR$/exchange-app/pom.xml" />
         <option value="$PROJECT_DIR$/exchgenerator-app/pom.xml" />
+        <option value="$PROJECT_DIR$/blocker-app/pom.xml" />
       </list>
     </option>
   </component>
