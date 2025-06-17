@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/frontui-app/pom.xml" />
         <option value="$PROJECT_DIR$/accounts-app/pom.xml" />
         <option value="$PROJECT_DIR$/cash-app/pom.xml" />
+        <option value="$PROJECT_DIR$/transfer-app/pom.xml" />
       </list>
     </option>
   </component>
