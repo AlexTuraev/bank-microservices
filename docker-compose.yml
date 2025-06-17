@@ -1,4 +1,15 @@
 services:
+  consul:
+    image: consul:1.15.0
+    container_name: consul
+    ports:
+      - "${CONSUL_PORT}:${CONSUL_PORT}"  # Web UI
+      - "8600:8600/udp"  # DNS
+    environment:
+      - CONSUL_BIND_ADDR=0.0.0.0
+#    volumes:
+#      - consul_data:/consul/data
+
   frontui-service:
     build:
       context: ./frontui-app
