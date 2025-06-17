@@ -7,6 +7,8 @@ services:
       - "8600:8600/udp"  # DNS
     environment:
       - CONSUL_BIND_ADDR=0.0.0.0
+    networks:
+      - app_network
 #    volumes:
 #      - consul_data:/consul/data
 
@@ -15,14 +17,17 @@ services:
       context: ./frontui-app
       dockerfile: Dockerfile
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${FRONTUI_SERVER_PORT}:${FRONTUI_SERVER_PORT}"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://${USER_DB_HOST}:5432/${USER_DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${USER_DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${USER_DB_PASSWORD}
-      SERVER_PORT: ${SERVER_PORT}
+      SERVER_PORT: ${FRONTUI_SERVER_PORT}
     depends_on:
+      - consul
       - user-db
+    networks:
+      - app_network
 
   user-db:
     image: postgres:16
@@ -33,27 +38,38 @@ services:
       POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
     ports:
       - "5433:5432"
+    networks:
+      - app_network
 
-#  accounts-service:
-#    build:
-#      context: ./accounts-app
-#      dockerfile: Dockerfile
-#    ports:
-#      - "${SERVER_PORT}:${SERVER_PORT}"
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://${USER_DB_HOST}:5432/${USER_DB_NAME}
-#      SPRING_DATASOURCE_USERNAME: ${USER_DB_USERNAME}
-#      SPRING_DATASOURCE_PASSWORD: ${USER_DB_PASSWORD}
-#      SERVER_PORT: ${SERVER_PORT}
-#    depends_on:
-#      - user-db
-#
-#  accounts-db:
-#    image: postgres:16
-#    container_name: accounts-db
-#    environment:
-#      POSTGRES_DB: ${USER_DB_NAME}
-#      POSTGRES_USER: ${USER_DB_USERNAME}
-#      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
-#    ports:
-#      - "5434:5432"
+  accounts-service:
+    build:
+      context: ./accounts-app
+      dockerfile: Dockerfile
+    ports:
+      - "${ACCOUNTS_SERVER_PORT}:${ACCOUNTS_SERVER_PORT}"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${ACCOUNTS_DB_HOST}:5432/${ACCOUNTS_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${ACCOUNTS_DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${ACCOUNTS_DB_PASSWORD}
+      SERVER_PORT: ${ACCOUNTS_SERVER_PORT}
+    depends_on:
+      - consul
+      - accounts-db
+    networks:
+      - app_network
+
+  accounts-db:
+    image: postgres:16
+    container_name: accounts-db
+    environment:
+      POSTGRES_DB: ${ACCOUNTS_DB_NAME}
+      POSTGRES_USER: ${ACCOUNTS_DB_USERNAME}
+      POSTGRES_PASSWORD: ${ACCOUNTS_DB_PASSWORD}
+    ports:
+      - "5434:5432"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

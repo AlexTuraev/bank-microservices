@@ -12,7 +12,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(
-                r -> r.requestMatchers("signup").permitAll()
+                r -> r.requestMatchers("signup", "/actuator/health").permitAll()
                         .anyRequest().authenticated())
                         .httpBasic(Customizer.withDefaults())
                 .logout(Customizer.withDefaults())
