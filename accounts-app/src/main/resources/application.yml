@@ -2,7 +2,7 @@ spring:
   application:
     name: accounts-app
   datasource:
-    url: ${SPRING_DATASOURCE_URL_ACCOUNTS:jdbc:postgresql://${ACCOUNTS_DB_HOST}:5432/${ACCOUNTS_DB_NAME}}
+    url: ${SPRING_DATASOURCE_URL_ACCOUNTS:jdbc:postgresql://localhost:5434/accountdb}
     username: ${SPRING_DATASOURCE_USERNAME_ACCOUNTS:user}
     password: ${SPRING_DATASOURCE_PASSWORD_ACOUNTS:password}
   jpa:
@@ -10,6 +10,8 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yml
 
   cloud:
     consul:
