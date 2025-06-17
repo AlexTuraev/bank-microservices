@@ -1,10 +1,10 @@
-package org.tasks.templateapp;
+package org.tasks.frontuiapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TemplateAppApplicationTests {
+class FrontuiAppApplicationTests {
 
     @Test
     void contextLoads() {
