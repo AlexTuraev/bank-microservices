@@ -8,6 +8,7 @@ spring:
     url: ${SPRING_DATASOURCE_URL_ACCOUNTS:jdbc:postgresql://localhost:5434/accountdb}
     username: ${SPRING_DATASOURCE_USERNAME_ACCOUNTS:user}
     password: ${SPRING_DATASOURCE_PASSWORD_ACOUNTS:password}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
