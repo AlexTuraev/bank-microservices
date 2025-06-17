@@ -18,7 +18,7 @@ spring:
         service-name: frontui-app
 #      config:
 #        enabled: true            # Включаем Consul Config для внешней конфигурации
-#        prefix: config           # Префикс в KV-хранилище Consul (по умолчанию "config")
+#        prefixes: config           # Префикс в KV-хранилище Consul (по умолчанию "config")
 #        defaultContext: application  # Контекст по умолчанию
 
 server:
