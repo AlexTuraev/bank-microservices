@@ -2,9 +2,10 @@ spring:
   application:
     name: frontui-app
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/frontuidb}
+    username: ${SPRING_DATASOURCE_USERNAME:user}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -32,3 +33,7 @@ management:
   endpoint:
     health:
       show-details: always
+
+application:
+  secret:
+    key: ${FRONTUI_SECRET_REMEMBERME_KEY:secretkey}

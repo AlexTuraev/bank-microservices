@@ -19,23 +19,24 @@ services:
     ports:
       - "${FRONTUI_SERVER_PORT}:${FRONTUI_SERVER_PORT}"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://${USER_DB_HOST}:5433/${USER_DB_NAME}
-      SPRING_DATASOURCE_USERNAME: ${USER_DB_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${USER_DB_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${FRONTUI_DB_HOST}:5433/${FRONTUI_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${FRONTUI_DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${FRONTUI_DB_PASSWORD}
       SERVER_PORT: ${FRONTUI_SERVER_PORT}
+      APPLICATION_SECRET_KEY: ${FRONTUI_SECRET_REMEMBERME_KEY}
     depends_on:
       - consul
-      - user-db
+      - frontui-db
     networks:
       - app_network
 
-  user-db:
+  frontui-db:
     image: postgres:16
     container_name: frontui-db
     environment:
-      POSTGRES_DB: ${USER_DB_NAME}
-      POSTGRES_USER: ${USER_DB_USERNAME}
-      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
+      POSTGRES_DB: ${FRONTUI_DB_NAME}
+      POSTGRES_USER: ${FRONTUI_DB_USERNAME}
+      POSTGRES_PASSWORD: ${FRONTUI_DB_PASSWORD}
     ports:
       - "5433:5432"
     networks:
