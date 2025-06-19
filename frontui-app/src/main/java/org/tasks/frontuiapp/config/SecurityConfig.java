@@ -1,21 +1,23 @@
 package org.tasks.frontuiapp.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.tasks.frontuiapp.service.JpaUserDetailsService;
+import org.springframework.web.client.RestClient;
 
 import javax.sql.DataSource;
 
 @Configuration
+@EnableDiscoveryClient
 public class SecurityConfig {
 
     @Value("${application.secret.key}")
@@ -53,8 +55,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new JpaUserDetailsService();
+    @LoadBalanced
+    public RestClient restClient() {
+        return RestClient.create();
     }
+
+//    @Bean
+//    public UserDetailsService userDetailsService(OAuth2AuthorizedClientManager manager) {
+//        return new JpaUserDetailsService(manager);
+//    }
 
 }

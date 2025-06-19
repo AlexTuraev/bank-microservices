@@ -4,11 +4,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AccountsController {
+public class Oauth2Controller {
 
-    @GetMapping
-    public String getAccounts() {
-        return "accounts";
+    @GetMapping("/account")
+    public String getAccount() {
+        return "account";
     }
 
 }
