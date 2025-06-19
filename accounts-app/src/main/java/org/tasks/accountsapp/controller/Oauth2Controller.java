@@ -4,10 +4,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.tasks.accountsapp.dto.UserDto;
+import org.tasks.accountsapp.dto.AccountDto;
+import org.tasks.accountsapp.service.AccountService;
 
 @RestController
 public class Oauth2Controller {
+
+    private final AccountService accountService;
+
+    public Oauth2Controller(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @GetMapping("/account")
     public String getAccount() {
@@ -16,8 +23,9 @@ public class Oauth2Controller {
 
     @PostMapping("/account")
     public String createAccount(
-            @RequestBody UserDto userDto
+            @RequestBody AccountDto accountDto
     ) {
+        accountService.createAccount(accountDto);
         return "account has been created";
     }
 

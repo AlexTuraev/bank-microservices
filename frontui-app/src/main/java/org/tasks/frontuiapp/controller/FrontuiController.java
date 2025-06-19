@@ -37,9 +37,9 @@ public class FrontuiController {
             @RequestParam(name = "birthdate") String birthdate
     ) {
         UserDto userDto = new UserDto(login, password, name, birthdate);
-        frontuiService.createAccount(userDto);
+        boolean isCreated = frontuiService.createAccount(userDto);
 
-        return "main";
+        return isCreated ? "main" : "signup";
     }
 
 }
