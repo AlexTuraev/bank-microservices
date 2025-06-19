@@ -7,12 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.client.RestClient;
+import org.tasks.frontuiapp.service.JpaUserDetailsService;
 
 import javax.sql.DataSource;
 
@@ -60,9 +63,9 @@ public class SecurityConfig {
         return RestClient.create();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(OAuth2AuthorizedClientManager manager) {
-//        return new JpaUserDetailsService(manager);
-//    }
+    @Bean
+    public UserDetailsService userDetailsService(OAuth2AuthorizedClientManager manager, RestClient restClient) {
+        return new JpaUserDetailsService(manager, restClient);
+    }
 
 }
