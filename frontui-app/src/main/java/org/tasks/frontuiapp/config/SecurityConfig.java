@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, DataSource dataSource) throws Exception {
         return http.authorizeHttpRequests(
-                r -> r.requestMatchers("signup", "/actuator/health").permitAll()
+                r -> r.requestMatchers("/signup", "/signup/*", "/actuator/health").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .logout(Customizer.withDefaults())
