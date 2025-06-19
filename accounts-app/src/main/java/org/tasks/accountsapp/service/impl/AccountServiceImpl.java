@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     public Boolean createAccount(AccountDto accountDto) {
         AccountEntity accountEntity = new AccountEntity(
                 accountDto.getLogin(),
-                passwordEncoder.encode(accountDto.getPassword()),
+                passwordEncoder.encode(accountDto.getLogin()+accountDto.getPassword()),
                 accountDto.getName(),
                 accountDto.getBirthdate()
         );
