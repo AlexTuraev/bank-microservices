@@ -1,6 +1,7 @@
 package org.tasks.frontuiapp.service;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,17 +11,18 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 public class JpaUserDetailsService implements UserDetailsService {
 
     private final OAuth2AuthorizedClientManager manager;
-    private final RestClient restClient;
+    private final RestTemplate restTemplate;
 
-    public JpaUserDetailsService(OAuth2AuthorizedClientManager manager, RestClient restClient) {
+    public JpaUserDetailsService(OAuth2AuthorizedClientManager manager, RestTemplate restTemplate) {
         this.manager = manager;
-        this.restClient = restClient;
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -34,15 +36,13 @@ public class JpaUserDetailsService implements UserDetailsService {
 
             String accessToken = client.getAccessToken().getTokenValue();
 
-            ResponseEntity<String> responseEntity = restClient.get()
-//                    .uri("http://accounts-app/account")
-                    .uri("http://localhost:8083/account")
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) // Подставляем токен доступа в заголовок Authorization
-                    .retrieve()
-                    .toEntity(String.class);
-
-            String accountAnswer = responseEntity.getBody();
-
+            // -------------------------------------------------------------------------------------
+            RequestEntity<Void> requestEntity = RequestEntity
+                    .get("http://accounts-app/account")
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                    .build();
+            var s = restTemplate.exchange(requestEntity, String.class);
+            // -------------------------------------------------------------------------------------
 
             return new User(
                     "admin", "password", List.of()

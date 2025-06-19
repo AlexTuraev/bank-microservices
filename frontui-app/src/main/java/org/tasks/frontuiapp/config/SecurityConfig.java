@@ -1,6 +1,7 @@
 package org.tasks.frontuiapp.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
 import org.tasks.frontuiapp.service.JpaUserDetailsService;
 
 import javax.sql.DataSource;
@@ -59,13 +61,14 @@ public class SecurityConfig {
 
     @Bean
     @LoadBalanced
-    public RestClient restClient() {
-        return RestClient.create();
+    public RestTemplate accountsRestTemplate(RestTemplateBuilder builder) {
+//        return builder.rootUri("http://accounts-app").build();
+        return builder.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService(OAuth2AuthorizedClientManager manager, RestClient restClient) {
-        return new JpaUserDetailsService(manager, restClient);
+    public UserDetailsService userDetailsService(OAuth2AuthorizedClientManager manager, RestTemplate restTemplate) {
+        return new JpaUserDetailsService(manager, restTemplate);
     }
 
 }
