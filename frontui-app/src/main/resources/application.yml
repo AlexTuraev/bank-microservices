@@ -24,7 +24,7 @@ spring:
             provider: keycloak
             authorizationGrantType: client_credentials
             client-id: front-ui
-            client-secret: sZ3qUAEtCv3YzE6b9n3FZCrnJ5VGDsXo
+            client-secret: ${FRONTUI_OAUTH2_SECRET:sZ3qUAEtCv3YzE6b9n3FZCrnJ5VGDsXo}
             scope: profile
             clientAuthenticationMethod: client_secret_post
 
