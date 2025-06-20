@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+import org.tasks.frontuiapp.dto.UserDto;
 
 import java.util.List;
 
@@ -36,16 +37,15 @@ public class JpaUserDetailsService implements UserDetailsService {
 
             String accessToken = client.getAccessToken().getTokenValue();
 
-            // -------------------------------------------------------------------------------------
-            RequestEntity<Void> requestEntity = RequestEntity
-                    .get("http://accounts-app/account")
+            RequestEntity<String> requestEntity = RequestEntity
+                    .post("http://accounts-app/auth")
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                    .build();
-            var s = restTemplate.exchange(requestEntity, String.class);
-            // -------------------------------------------------------------------------------------
+                    .body(username);
+
+            UserDto userDto = restTemplate.exchange(requestEntity, UserDto.class).getBody();
 
             return new User(
-                    "admin", "password", List.of()
+                    userDto.getLogin(), userDto.getPassword(), List.of()
             );
         }
         catch (Exception e) {

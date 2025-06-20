@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
@@ -19,10 +20,12 @@ public class FrontuiServiceImpl implements FrontuiService {
 
     private final RestTemplate restTemplate;
     private final OAuth2AuthorizedClientManager manager;
+    private final PasswordEncoder passwordEncoder;
 
-    public FrontuiServiceImpl(RestTemplate restTemplate, OAuth2AuthorizedClientManager manager) {
+    public FrontuiServiceImpl(RestTemplate restTemplate, OAuth2AuthorizedClientManager manager, PasswordEncoder passwordEncoder) {
         this.restTemplate = restTemplate;
         this.manager = manager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -37,10 +40,11 @@ public class FrontuiServiceImpl implements FrontuiService {
             String accessToken = client.getAccessToken().getTokenValue();
 
             // -------------------------------------------------------------------------------------
+
             RequestEntity<UserDto> requestEntity = RequestEntity
                     .post("http://accounts-app/account")
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                    .body(userDto);
+                    .body(new UserDto(userDto.getLogin(), passwordEncoder.encode(userDto.getPassword()), userDto.getName(), userDto.getBirthdate()));
 
             var s = restTemplate.exchange(requestEntity, String.class);
             // -------------------------------------------------------------------------------------

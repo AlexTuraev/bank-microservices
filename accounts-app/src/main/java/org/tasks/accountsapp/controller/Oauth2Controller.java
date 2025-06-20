@@ -1,8 +1,10 @@
 package org.tasks.accountsapp.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.tasks.accountsapp.dto.AccountDto;
 import org.tasks.accountsapp.service.AccountService;
@@ -16,9 +18,12 @@ public class Oauth2Controller {
         this.accountService = accountService;
     }
 
-    @GetMapping("/account")
-    public String getAccount() {
-        return "account";
+    @PostMapping("/auth")
+    public ResponseEntity<AccountDto> getAccount(
+            @RequestBody String login
+    ) {
+        AccountDto dto = accountService.findByLogin(login);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/account")

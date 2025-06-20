@@ -6,4 +6,5 @@ public interface AccountService {
 
     Boolean createAccount(AccountDto accountDto);
 
+    AccountDto findByLogin(String login);
 }
