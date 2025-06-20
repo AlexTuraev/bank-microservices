@@ -6,4 +6,5 @@ public interface FrontuiService {
 
     Boolean createAccount(UserDto user);
 
+    void changePassword(String login, String password);
 }

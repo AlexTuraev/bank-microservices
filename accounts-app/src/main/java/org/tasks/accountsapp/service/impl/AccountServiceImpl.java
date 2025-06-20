@@ -1,8 +1,10 @@
 package org.tasks.accountsapp.service.impl;
 
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tasks.accountsapp.dto.AccountDto;
+import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.mapper.AccountMapper;
 import org.tasks.accountsapp.model.AccountEntity;
 import org.tasks.accountsapp.repository.AccountRepository;
@@ -38,6 +40,12 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return entities.stream().map(accountMapper::mapToDto).findFirst().orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public void editPassword(ChangePswDto changePswDto) {
+        accountRepository.editPassword(changePswDto.getLogin(), changePswDto.getPasswordHash());
     }
 
 }

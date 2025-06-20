@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.tasks.accountsapp.dto.AccountDto;
+import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.service.AccountService;
 
 @RestController
@@ -32,6 +33,14 @@ public class Oauth2Controller {
     ) {
         accountService.createAccount(accountDto);
         return "account has been created";
+    }
+
+    @PostMapping("/editpsw")
+    public ResponseEntity<?> editPassword(
+            @RequestBody ChangePswDto changePswDto
+    ) {
+        accountService.editPassword(changePswDto);
+        return ResponseEntity.ok().build();
     }
 
 }

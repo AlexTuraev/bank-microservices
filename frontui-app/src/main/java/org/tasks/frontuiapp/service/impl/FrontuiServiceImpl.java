@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.tasks.frontuiapp.dto.ChangePswDto;
 import org.tasks.frontuiapp.dto.UserDto;
 import org.tasks.frontuiapp.service.FrontuiService;
 
@@ -31,14 +32,7 @@ public class FrontuiServiceImpl implements FrontuiService {
     @Override
     public Boolean createAccount(UserDto userDto) {
         try {
-            OAuth2AuthorizedClient client = manager.authorize(OAuth2AuthorizeRequest
-                    .withClientRegistrationId("front-ui")
-                    .principal("system")
-                    .build()
-            );
-
-            String accessToken = client.getAccessToken().getTokenValue();
-
+            String accessToken = getOauth2Token();
             // -------------------------------------------------------------------------------------
 
             RequestEntity<UserDto> requestEntity = RequestEntity
@@ -54,6 +48,31 @@ public class FrontuiServiceImpl implements FrontuiService {
         catch (Exception e) {
             throw new UsernameNotFoundException("Not found or service is down");
         }
+    }
+
+    @Override
+    public void changePassword(String login, String password) {
+        String accessToken = getOauth2Token();
+
+        RequestEntity<ChangePswDto> requestEntity = RequestEntity
+                .post("http://accounts-app/editpsw")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .body(ChangePswDto.builder()
+                        .login(login)
+                        .passwordHash(passwordEncoder.encode(password))
+                        .build());
+
+        restTemplate.exchange(requestEntity, String.class);
+    }
+
+    private String getOauth2Token() {
+        OAuth2AuthorizedClient client = manager.authorize(OAuth2AuthorizeRequest
+                .withClientRegistrationId("front-ui")
+                .principal("system")
+                .build()
+        );
+
+        return client.getAccessToken().getTokenValue();
     }
 
 }
