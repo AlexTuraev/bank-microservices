@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import org.tasks.frontuiapp.dto.UserDto;
 import org.tasks.frontuiapp.service.FrontuiService;
 
+import java.time.LocalDate;
+
 @Controller
 public class FrontuiController {
 
@@ -38,7 +40,7 @@ public class FrontuiController {
             @RequestParam(name = "login") String login,
             @RequestParam(name = "password") String password,
             @RequestParam(name = "name") String name,
-            @RequestParam(name = "birthdate") String birthdate
+            @RequestParam(name = "birthdate") LocalDate birthdate
     ) {
         UserDto userDto = new UserDto(login, password, name, birthdate);
         boolean isCreated = frontuiService.createAccount(userDto);

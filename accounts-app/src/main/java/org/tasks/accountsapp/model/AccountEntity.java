@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -31,9 +33,9 @@ public class AccountEntity {
     private String name;
 
     @Column(name = "birthdate", nullable = false)
-    private String birthdate;
+    private LocalDate birthdate;
 
-    public AccountEntity(String login, String passwordHash, String name, String birthdate) {
+    public AccountEntity(String login, String passwordHash, String name, LocalDate birthdate) {
         this.login = login;
         this.passwordHash = passwordHash;
         this.name = name;

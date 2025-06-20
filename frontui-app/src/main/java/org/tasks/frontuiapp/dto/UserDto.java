@@ -3,7 +3,8 @@ package org.tasks.frontuiapp.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,5 +13,5 @@ public class UserDto {
     private String login;
     private String password;
     private String name;
-    private String birthdate;
+    private LocalDate birthdate;
 }
