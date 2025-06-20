@@ -1,7 +1,9 @@
 package org.tasks.frontuiapp.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,9 @@ public class FrontuiController {
     }
 
     @GetMapping("/main")
-    public String getMain() {
+    public String getMain(Authentication authentication, Model model) {
+        model.addAttribute("login", authentication.getName());
+
         return "main";
     }
 
@@ -39,7 +43,7 @@ public class FrontuiController {
         UserDto userDto = new UserDto(login, password, name, birthdate);
         boolean isCreated = frontuiService.createAccount(userDto);
 
-        return isCreated ? "main" : "signup";
+        return isCreated ? "redirect:/main" : "redirect:/signup";
     }
 
 }
