@@ -4,9 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +32,8 @@ public class BankAccountEntity {
     @Column(name = "number", nullable = false, unique = true)
     private long number;
 
-    @Column(name = "accounts_id")
-    private long accountsId;
+    @Column(name = "user_id")
+    private long userId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "currency", nullable = false)
@@ -38,5 +41,9 @@ public class BankAccountEntity {
 
     @Column(name = "value", nullable = false)
     private BigDecimal value;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable=false, updatable=false)
+    private UserEntity userEntity;
 
 }

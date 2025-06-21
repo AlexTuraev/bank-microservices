@@ -9,5 +9,5 @@ public interface FrontuiService {
 
     void changePassword(String login, String password);
 
-    MainDto getMainModelData(String name);
+    MainDto getMainModelData(String login);
 }

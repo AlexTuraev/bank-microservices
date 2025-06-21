@@ -2,6 +2,7 @@ package org.tasks.frontuiapp.service.impl;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,8 +68,16 @@ public class FrontuiServiceImpl implements FrontuiService {
     }
 
     @Override
-    public MainDto getMainModelData(String name) {
-        return null;
+    public MainDto getMainModelData(String login) {
+        String accessToken = getOauth2Token();
+
+        RequestEntity<String> requestEntity = RequestEntity
+                .post("http://accounts-app/get-users-data")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .body(login);
+
+        ResponseEntity<MainDto> response = restTemplate.exchange(requestEntity, MainDto.class);
+        return response.getBody();
     }
 
     private String getOauth2Token() {
