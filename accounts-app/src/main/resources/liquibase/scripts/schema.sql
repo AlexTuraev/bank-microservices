@@ -19,7 +19,7 @@ create table if not exists bank_account(
     number bigint unique not null,
     accounts_id bigint,
     currency currency_type not null,
-    value numeric(10, 2),
+    value numeric(10, 2) default 0,
 
     foreign key (accounts_id) references accounts(id) on delete cascade
     );
