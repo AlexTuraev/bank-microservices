@@ -36,7 +36,7 @@ public class FrontuiController {
 
         model.addAttribute("login", authentication.getName());
         model.addAttribute("name", dto.getName());
-        model.addAttribute("birthday", dto.getBirthday());
+        model.addAttribute("birthdate", dto.getBirthday());
 
         model.addAttribute("users", dto.getUsers());
         model.addAttribute("passwordErrors", passwordErrors);
