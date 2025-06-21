@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.tasks.frontuiapp.dto.ChangePswDto;
+import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
 import org.tasks.frontuiapp.service.FrontuiService;
 
@@ -63,6 +64,11 @@ public class FrontuiServiceImpl implements FrontuiService {
                         .build());
 
         restTemplate.exchange(requestEntity, String.class);
+    }
+
+    @Override
+    public MainDto getMainModelData(String name) {
+        return null;
     }
 
     private String getOauth2Token() {

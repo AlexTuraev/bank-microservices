@@ -2,16 +2,16 @@ package org.tasks.accountsapp.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.tasks.accountsapp.dto.AccountDto;
-import org.tasks.accountsapp.model.AccountEntity;
+import org.tasks.accountsapp.dto.UserDto;
+import org.tasks.accountsapp.model.UserEntity;
 
 @Mapper(componentModel = "spring")
-public interface AccountMapper {
+public interface UserMapper {
 
     @Mapping(target = "password", source = "passwordHash")
-    AccountDto mapToDto(AccountEntity accountEntity);
+    UserDto mapToDto(UserEntity userEntity);
 
     @Mapping(target = "passwordHash", source = "password")
-    AccountEntity mapToEntity(AccountDto accountDto);
+    UserEntity mapToEntity(UserDto accountDto);
 
 }

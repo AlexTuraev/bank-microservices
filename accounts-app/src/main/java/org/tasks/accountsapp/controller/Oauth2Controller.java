@@ -1,37 +1,35 @@
 package org.tasks.accountsapp.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.tasks.accountsapp.dto.AccountDto;
+import org.tasks.accountsapp.dto.UserDto;
 import org.tasks.accountsapp.dto.ChangePswDto;
-import org.tasks.accountsapp.service.AccountService;
+import org.tasks.accountsapp.service.UserService;
 
 @RestController
 public class Oauth2Controller {
 
-    private final AccountService accountService;
+    private final UserService userService;
 
-    public Oauth2Controller(AccountService accountService) {
-        this.accountService = accountService;
+    public Oauth2Controller(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<AccountDto> getAccount(
+    public ResponseEntity<UserDto> getAccount(
             @RequestBody String login
     ) {
-        AccountDto dto = accountService.findByLogin(login);
+        UserDto dto = userService.findByLogin(login);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/account")
     public String createAccount(
-            @RequestBody AccountDto accountDto
+            @RequestBody UserDto accountDto
     ) {
-        accountService.createAccount(accountDto);
+        userService.createAccount(accountDto);
         return "account has been created";
     }
 
@@ -39,7 +37,7 @@ public class Oauth2Controller {
     public ResponseEntity<?> editPassword(
             @RequestBody ChangePswDto changePswDto
     ) {
-        accountService.editPassword(changePswDto);
+        userService.editPassword(changePswDto);
         return ResponseEntity.ok().build();
     }
 

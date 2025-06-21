@@ -6,8 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +16,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "accounts")
-public class AccountEntity {
+@Table(name = "users")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +35,7 @@ public class AccountEntity {
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
 
-    public AccountEntity(String login, String passwordHash, String name, LocalDate birthdate) {
+    public UserEntity(String login, String passwordHash, String name, LocalDate birthdate) {
         this.login = login;
         this.passwordHash = passwordHash;
         this.name = name;

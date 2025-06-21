@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.tasks.frontuiapp.controller.utils.ControllerUtils;
+import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
 import org.tasks.frontuiapp.service.FrontuiService;
 
@@ -31,7 +32,7 @@ public class FrontuiController {
 
     @GetMapping("/main")
     public String getMain(Authentication authentication, Model model) {
-
+        MainDto dto = frontuiService.getMainModelData(authentication.getName());
 
         model.addAttribute("login", authentication.getName());
         model.addAttribute("passwordErrors", passwordErrors);

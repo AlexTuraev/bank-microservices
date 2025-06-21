@@ -2,7 +2,7 @@
 
 -- changeset alex turaev:1
 
-create table if not exists accounts(
+create table if not exists users(
     id bigserial primary key,
     login varchar(255) unique not null,
     password_hash text,
@@ -17,9 +17,9 @@ create type currency_type as enum('rub', 'dollar', 'euro');
 create table if not exists bank_account(
     id bigserial primary key,
     number bigint unique not null,
-    accounts_id bigint,
+    users_id bigint,
     currency currency_type not null,
     value numeric(10, 2) default 0,
 
-    foreign key (accounts_id) references accounts(id) on delete cascade
+    foreign key (users_id) references users(id) on delete cascade
     );
