@@ -35,6 +35,10 @@ public class FrontuiController {
         MainDto dto = frontuiService.getMainModelData(authentication.getName());
 
         model.addAttribute("login", authentication.getName());
+        model.addAttribute("name", dto.getName());
+        model.addAttribute("birthday", dto.getBirthday());
+
+        model.addAttribute("users", dto.getUsers());
         model.addAttribute("passwordErrors", passwordErrors);
 
         return "main";

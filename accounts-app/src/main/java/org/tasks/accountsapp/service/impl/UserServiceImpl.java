@@ -59,6 +59,9 @@ public class UserServiceImpl implements UserService {
         UserEntity currentUser = users.stream().filter(u -> u.getLogin().equals(login)).findFirst().orElseThrow();
 
         ExtUsersModel model = new ExtUsersModel();
+
+        users.forEach(user -> user.setPasswordHash(""));
+
         model.setUsers(users);
         model.setName(login);
         model.setBirthday(currentUser.getBirthdate());
