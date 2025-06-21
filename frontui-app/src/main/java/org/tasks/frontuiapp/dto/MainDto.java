@@ -12,7 +12,7 @@ public class MainDto {
 
     private String name;
 
-    private LocalDate birthday;
+    private LocalDate birthdate;
 
     private List<UserDto> users;
 }

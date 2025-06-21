@@ -16,7 +16,7 @@ public class ExtUsersModel {
 
     private String name;
 
-    private LocalDate birthday;
+    private LocalDate birthdate;
 
     private List<UserEntity> users;
 

@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
         model.setUsers(users);
         model.setName(currentUser.getName());
-        model.setBirthday(currentUser.getBirthdate());
+        model.setBirthdate(currentUser.getBirthdate());
 
         return extUserMapper.toDto(model);
     }
