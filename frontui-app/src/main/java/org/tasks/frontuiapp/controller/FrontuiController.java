@@ -31,6 +31,8 @@ public class FrontuiController {
 
     @GetMapping("/main")
     public String getMain(Authentication authentication, Model model) {
+
+
         model.addAttribute("login", authentication.getName());
         model.addAttribute("passwordErrors", passwordErrors);
 
