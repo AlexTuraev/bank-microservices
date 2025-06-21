@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         users.forEach(user -> user.setPasswordHash(""));
 
         model.setUsers(users);
-        model.setName(login);
+        model.setName(currentUser.getName());
         model.setBirthday(currentUser.getBirthdate());
 
         return extUserMapper.toDto(model);
