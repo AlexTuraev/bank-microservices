@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,4 +17,5 @@ public class UserDto {
     private String password;
     private String name;
     private LocalDate birthdate;
+    private List<BankAccountDto> bankAccounts;
 }

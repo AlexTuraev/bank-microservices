@@ -7,7 +7,7 @@ import org.tasks.accountsapp.model.UserEntity;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {BankAccountMapper.class})
 public interface UserMapper {
 
     @Mapping(target = "password", source = "passwordHash")
