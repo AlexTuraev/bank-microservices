@@ -9,7 +9,6 @@ import org.tasks.accountsapp.model.BankAccountEntity;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BankAccountMapper {
 
-    @Mapping(target = "currency", source = "currency.value")
     BankAccountDto toDto(BankAccountEntity model);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.tasks.frontuiapp.controller.utils.ControllerUtils;
 import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
+import org.tasks.frontuiapp.enums.CurrencyType;
 import org.tasks.frontuiapp.service.FrontuiService;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class FrontuiController {
     private final FrontuiService frontuiService;
     private List<String> passwordErrors = new ArrayList<>();
     private List<String> signupErrors = new ArrayList<>();
+    private List<CurrencyType> currencyTypes = List.of(CurrencyType.rub, CurrencyType.dollar, CurrencyType.euro);
 
     public FrontuiController(FrontuiService frontuiService) {
         this.frontuiService = frontuiService;
@@ -38,6 +40,9 @@ public class FrontuiController {
 
         model.addAttribute("users", dto.getUsers());
         model.addAttribute("passwordErrors", passwordErrors);
+
+        model.addAttribute("accounts", dto.getUsers().stream().filter(u -> u.getLogin().equals(authentication.getName())).findFirst().orElse(null).getBankAccounts());
+        model.addAttribute("currency", currencyTypes);
 
         return "main";
     }
