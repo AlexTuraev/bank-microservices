@@ -13,6 +13,7 @@ import org.tasks.frontuiapp.dto.UserDto;
 import org.tasks.frontuiapp.enums.CurrencyType;
 import org.tasks.frontuiapp.service.FrontuiService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,17 @@ public class FrontuiController {
             frontuiService.changePassword(login, password);
             return "redirect:/main";
         }
+    }
+
+    @PostMapping("/user/{login}/сash")
+    public String cash(
+            @PathVariable String login,
+            @RequestParam(name = "action") String action,
+            @RequestParam(name = "value") BigDecimal value,
+            @RequestParam(name = "currency") CurrencyType currency,
+            Model model
+    ) {
+        return "redirect:/main";
     }
 
 
