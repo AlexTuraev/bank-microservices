@@ -23,7 +23,7 @@
         </processorPath>
         <module name="frontui-app" />
       </profile>
-      <profile name="Annotation profile for transfer-app" enabled="true">
+      <profile name="Annotation profile for cash-app" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -31,11 +31,12 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="exchange-app" />
-        <module name="cash-app" />
-        <module name="notifications-app" />
         <module name="transfer-app" />
         <module name="exchgenerator-app" />
         <module name="blocker-app" />
+        <module name="cash-app" />
+        <module name="notifications-app" />
+        <module name="commonsapp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -47,6 +48,7 @@
       <module name="accounts-app" options="-parameters" />
       <module name="blocker-app" options="-parameters" />
       <module name="cash-app" options="-parameters" />
+      <module name="commonsapp" options="-parameters" />
       <module name="exchange-app" options="-parameters" />
       <module name="exchgenerator-app" options="-parameters" />
       <module name="frontui-app" options="-parameters" />

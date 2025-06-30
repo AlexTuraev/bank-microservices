@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.tasks.commonsapp.dto.CashDto;
+import org.tasks.commonsapp.enums.CurrencyType;
 import org.tasks.frontuiapp.controller.utils.ControllerUtils;
 import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
-import org.tasks.frontuiapp.enums.CurrencyType;
 import org.tasks.frontuiapp.service.FrontuiService;
 
 import java.math.BigDecimal;
@@ -90,6 +91,8 @@ public class FrontuiController {
         }
     }
 
+
+    // Положить/снять на счет
     @PostMapping("/user/{login}/сash")
     public String cash(
             @PathVariable String login,
@@ -98,6 +101,15 @@ public class FrontuiController {
             @RequestParam(name = "currency") CurrencyType currency,
             Model model
     ) {
+        CashDto cashDto = CashDto.builder()
+                .login(login)
+                .action(action)
+                .value(value)
+                .currency(currency)
+                .build();
+        Boolean isSuccess = frontuiService.cash(cashDto);
+
+//        return isSuccess ? "redirect:/main" : "redirect:/error";
         return "redirect:/main";
     }
 

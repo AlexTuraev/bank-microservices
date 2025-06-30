@@ -1,4 +1,4 @@
-package org.tasks.frontuiapp.enums;
+package org.tasks.commonsapp.enums;
 
 import lombok.Getter;
 

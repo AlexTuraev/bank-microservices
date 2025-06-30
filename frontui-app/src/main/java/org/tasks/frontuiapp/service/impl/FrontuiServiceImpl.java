@@ -1,6 +1,7 @@
 package org.tasks.frontuiapp.service.impl;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.tasks.commonsapp.dto.CashDto;
 import org.tasks.frontuiapp.dto.ChangePswDto;
 import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
@@ -78,6 +80,19 @@ public class FrontuiServiceImpl implements FrontuiService {
 
         ResponseEntity<MainDto> response = restTemplate.exchange(requestEntity, MainDto.class);
         return response.getBody();
+    }
+
+    @Override
+    public Boolean cash(CashDto cashDto) {
+        String accessToken = getOauth2Token();
+
+        RequestEntity<CashDto> requestEntity = RequestEntity
+                .post("http://cash-app/cash")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .body(cashDto);
+
+        ResponseEntity<?> response = restTemplate.exchange(requestEntity, Object.class);
+        return response.getStatusCode() == HttpStatus.OK ? Boolean.TRUE : Boolean.FALSE;
     }
 
     private String getOauth2Token() {
