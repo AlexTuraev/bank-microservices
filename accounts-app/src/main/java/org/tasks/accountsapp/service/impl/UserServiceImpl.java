@@ -13,7 +13,6 @@ import org.tasks.accountsapp.repository.UserRepository;
 import org.tasks.accountsapp.service.UserService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -68,5 +67,10 @@ public class UserServiceImpl implements UserService {
 
         return extUserMapper.toDto(model);
     }
+
+//    @Override
+//    public void changeCash(CashDto cashDto) {
+//        UserEntity userEntity = userRepository.findByLogin(cashDto.getLogin()).getFirst();
+//    }
 
 }

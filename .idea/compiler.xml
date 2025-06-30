@@ -23,7 +23,7 @@
         </processorPath>
         <module name="frontui-app" />
       </profile>
-      <profile name="Annotation profile for cash-app" enabled="true">
+      <profile name="Annotation profile for commonsapp" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

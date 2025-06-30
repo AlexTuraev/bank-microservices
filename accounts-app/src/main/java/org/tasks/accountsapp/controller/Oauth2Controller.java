@@ -4,9 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.dto.ExtUsersDto;
 import org.tasks.accountsapp.dto.UserDto;
-import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.service.UserService;
 
 @RestController
@@ -48,6 +48,14 @@ public class Oauth2Controller {
     ) {
         ExtUsersDto dto = userService.getUsersData(login);
         return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("/change-cash")
+    public ResponseEntity<?> changeCash(
+//            @RequestBody CashDto cashDto
+    ) {
+//        userService.changeCash(cashDto);
+        return ResponseEntity.ok().build();
     }
 
 }
