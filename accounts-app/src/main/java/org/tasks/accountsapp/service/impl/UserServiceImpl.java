@@ -2,16 +2,20 @@ package org.tasks.accountsapp.service.impl;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.tasks.aaacommons.dto.CashDto;
 import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.dto.ExtUsersDto;
 import org.tasks.accountsapp.dto.UserDto;
 import org.tasks.accountsapp.mapper.ExtUserMapper;
 import org.tasks.accountsapp.mapper.UserMapper;
+import org.tasks.accountsapp.model.BankAccountEntity;
 import org.tasks.accountsapp.model.ExtUsersModel;
 import org.tasks.accountsapp.model.UserEntity;
+import org.tasks.accountsapp.repository.BankAccountRepository;
 import org.tasks.accountsapp.repository.UserRepository;
 import org.tasks.accountsapp.service.UserService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,11 +24,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final ExtUserMapper extUserMapper;
+    private final BankAccountRepository bankAccountRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, ExtUserMapper extUserMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, ExtUserMapper extUserMapper, BankAccountRepository bankAccountRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.extUserMapper = extUserMapper;
+        this.bankAccountRepository = bankAccountRepository;
     }
 
     @Override
@@ -68,9 +74,11 @@ public class UserServiceImpl implements UserService {
         return extUserMapper.toDto(model);
     }
 
-//    @Override
-//    public void changeCash(CashDto cashDto) {
-//        UserEntity userEntity = userRepository.findByLogin(cashDto.getLogin()).getFirst();
-//    }
+    @Override
+    @Transactional
+    public void changeCash(CashDto cashDto) {
+        bankAccountRepository.changeCash(cashDto.getValue(), cashDto.getCurrency().getTitle(), cashDto.getLogin());
+        int a=5;
+    }
 
 }

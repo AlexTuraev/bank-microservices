@@ -55,7 +55,7 @@ public class Oauth2Controller {
     public ResponseEntity<?> changeCash(
             @RequestBody CashDto cashDto
     ) {
-//        userService.changeCash(cashDto);
+        userService.changeCash(cashDto);
         return ResponseEntity.ok().build();
     }
 
