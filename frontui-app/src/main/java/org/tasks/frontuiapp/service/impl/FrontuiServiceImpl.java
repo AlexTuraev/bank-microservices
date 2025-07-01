@@ -86,6 +86,10 @@ public class FrontuiServiceImpl implements FrontuiService {
     public Boolean cash(CashDto cashDto) {
         String accessToken = getOauth2Token();
 
+        if (cashDto.getAction().equals("GET")) {
+            cashDto.setValue(cashDto.getValue().negate());
+        }
+
         RequestEntity<CashDto> requestEntity = RequestEntity
                 .post("http://cash-app/cash")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
