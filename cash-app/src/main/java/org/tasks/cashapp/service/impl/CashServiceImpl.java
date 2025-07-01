@@ -1,7 +1,6 @@
 package org.tasks.cashapp.service.impl;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
@@ -9,8 +8,8 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.tasks.aaacommons.dto.CashDto;
 import org.tasks.cashapp.service.CashService;
-import org.tasks.commonsapp.dto.CashDto;
 
 @Service
 public class CashServiceImpl implements CashService {

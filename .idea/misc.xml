@@ -13,7 +13,13 @@
         <option value="$PROJECT_DIR$/blocker-app/pom.xml" />
         <option value="$PROJECT_DIR$/notifications-app/pom.xml" />
         <option value="$PROJECT_DIR$/commonsapp/pom.xml" />
+        <option value="$PROJECT_DIR$/aaa-commons/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/commonsapp/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="corretto-21" project-jdk-type="JavaSDK">

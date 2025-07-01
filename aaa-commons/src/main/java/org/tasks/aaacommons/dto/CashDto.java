@@ -1,9 +1,9 @@
-package org.tasks.commonsapp.dto;
+package org.tasks.aaacommons.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.tasks.commonsapp.enums.CurrencyType;
+import org.tasks.aaacommons.enums.CurrencyType;
 
 import java.math.BigDecimal;
 

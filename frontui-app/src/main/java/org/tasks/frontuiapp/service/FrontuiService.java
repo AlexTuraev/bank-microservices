@@ -1,6 +1,6 @@
 package org.tasks.frontuiapp.service;
 
-import org.tasks.commonsapp.dto.CashDto;
+import org.tasks.aaacommons.dto.CashDto;
 import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
 

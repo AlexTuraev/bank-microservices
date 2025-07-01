@@ -1,4 +1,4 @@
-package org.tasks.commonsapp.enums;
+package org.tasks.aaacommons.enums;
 
 import lombok.Getter;
 

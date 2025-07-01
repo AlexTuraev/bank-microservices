@@ -23,28 +23,40 @@
         </processorPath>
         <module name="frontui-app" />
       </profile>
-      <profile name="Annotation profile for commonsapp" enabled="true">
+      <profile name="Annotation profile for aaa-commons" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="aaa-commons" />
+      </profile>
+      <profile name="Annotation profile for cash-app" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
+        <module name="cash-app" />
         <module name="exchange-app" />
+        <module name="notifications-app" />
         <module name="transfer-app" />
         <module name="exchgenerator-app" />
         <module name="blocker-app" />
-        <module name="cash-app" />
-        <module name="notifications-app" />
-        <module name="commonsapp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="1commonsapp" target="21" />
+      <module name="commonsapp" target="21" />
       <module name="template-app" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="aaa-commons" options="-parameters" />
       <module name="accounts-app" options="-parameters" />
       <module name="blocker-app" options="-parameters" />
       <module name="cash-app" options="-parameters" />
