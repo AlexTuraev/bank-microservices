@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void changeCash(CashDto cashDto) {
         bankAccountRepository.changeCash(cashDto.getValue(), cashDto.getCurrency().getTitle(), cashDto.getLogin());
-        int a=5;
     }
 
 }
