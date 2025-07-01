@@ -14,9 +14,16 @@ create table if not exists users(
 
 create type currency_type as enum('rub', 'dollar', 'euro');
 
+-- для номера счета
+-- create sequence number_sequence
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1;
+
 create table if not exists bank_account(
-    id bigserial primary key,
-    number bigint unique not null,
+    number bigserial primary key,
     users_id bigint,
     currency currency_type not null,
     value numeric(10, 2) default 0,

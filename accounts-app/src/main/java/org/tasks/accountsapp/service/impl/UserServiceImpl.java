@@ -6,6 +6,7 @@ import org.tasks.aaacommons.dto.CashDto;
 import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.dto.ExtUsersDto;
 import org.tasks.accountsapp.dto.UserDto;
+import org.tasks.accountsapp.enums.CurrencyType;
 import org.tasks.accountsapp.mapper.ExtUserMapper;
 import org.tasks.accountsapp.mapper.UserMapper;
 import org.tasks.accountsapp.model.BankAccountEntity;
@@ -16,6 +17,7 @@ import org.tasks.accountsapp.repository.UserRepository;
 import org.tasks.accountsapp.service.UserService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,12 +36,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Boolean createAccount(UserDto accountDto) {
         UserEntity userEntity = userMapper.mapToEntity(accountDto);
 
-        var result = userRepository.save(userEntity);
+        var savedUser = userRepository.save(userEntity);
+        List<BankAccountEntity> bankAccounts = createNewBankAccounts(savedUser.getId());
+
+        bankAccountRepository.saveAll(bankAccounts);
 
         return true;
+    }
+
+    private List<BankAccountEntity> createNewBankAccounts(Long userId) {
+        List<BankAccountEntity> accounts = new ArrayList<>();
+        accounts.add(new BankAccountEntity(userId, CurrencyType.rub, BigDecimal.ZERO));
+        accounts.add(new BankAccountEntity(userId, CurrencyType.dollar, BigDecimal.ZERO));
+        accounts.add(new BankAccountEntity(userId, CurrencyType.euro, BigDecimal.ZERO));
+
+        return accounts;
     }
 
     @Override
