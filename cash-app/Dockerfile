@@ -1,4 +1,5 @@
 FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
-COPY build/libs/*.jar app.jar
+COPY target/*.jar app.jar
+#EXPOSE ${CASH_APP_SERVER_PORT}
 ENTRYPOINT ["java", "-jar", "app.jar"]

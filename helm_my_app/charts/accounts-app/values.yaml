@@ -1,0 +1,7 @@
+accounts-app:
+  replicaCount: 1
+  image:
+    repository: local/accounts-app:0.0.1-SNAPSHOT
+#    tag: 0.0.1-SNAPSHOT
+  service:
+    port: 8083

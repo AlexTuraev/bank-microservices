@@ -1,0 +1,15 @@
+apiVersion: v2
+name: accounts-app
+description: A Helm chart for Kubernetes
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.16.0"
+
+dependencies:
+  - name: postgresql
+    version: 12.1.0          # Версия чарта PostgreSQL
+    repository: https://charts.bitnami.com/bitnami
+    alias: accountdb

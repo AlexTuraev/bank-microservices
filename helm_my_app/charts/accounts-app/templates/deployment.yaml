@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts-app-deployment
+spec:
+#  replicas: {{ .Values.accounts-app.replicaCount }}
+  replicas: 2
+  selector:
+    matchLabels:
+      app: accounts-app-deployment
+  template:
+    metadata:
+      labels:
+        app: accounts-app-deployment
+    spec:
+      containers:
+        - name: accounts-app
+#          image: "{{ .Values.accounts-app.image.repository }}:{{ .Values.accounts-app.image.tag }}"
+          image: local/accounts-app:0.0.1
+          ports:
+#            - containerPort: {{ .Values.accounts-app.service.port }}
+            - containerPort: 8083
