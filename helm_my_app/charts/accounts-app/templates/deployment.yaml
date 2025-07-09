@@ -3,8 +3,7 @@ kind: Deployment
 metadata:
   name: accounts-app-deployment
 spec:
-#  replicas: {{ .Values.accounts-app.replicaCount }}
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: accounts-app-deployment
@@ -15,8 +14,20 @@ spec:
     spec:
       containers:
         - name: accounts-app
-#          image: "{{ .Values.accounts-app.image.repository }}:{{ .Values.accounts-app.image.tag }}"
-          image: local/accounts-app:0.0.1
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-#            - containerPort: {{ .Values.accounts-app.service.port }}
-            - containerPort: 8083
+            - name: accounts-app
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: {{ .Values.config.database_url }}
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ .Values.config.database_username }}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ .Values.config.database_password }}
+#              valueFrom:
+#                secretKeyRef:
+#                  name: account-db-secret
+#                  key: password

@@ -12,4 +12,5 @@ dependencies:
   - name: postgresql
     version: 12.1.0          # Версия чарта PostgreSQL
     repository: https://charts.bitnami.com/bitnami
-    alias: accountdb
+    alias: account-db
+    condition: account-db.enabled
