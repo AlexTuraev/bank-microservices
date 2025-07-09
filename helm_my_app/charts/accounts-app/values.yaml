@@ -9,7 +9,7 @@ service:
 #  config:
 #    database_url: "jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb"
 config:
-  database_url: "jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb"
+  database_url: jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb
   database_username: "user"
 # database_password_secret: "{{ .Release.Name }}-order-db-postgresql"
   database_password: "password"
