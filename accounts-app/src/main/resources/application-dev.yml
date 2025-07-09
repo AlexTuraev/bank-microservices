@@ -23,12 +23,14 @@ spring:
         jwt:
           issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/master}
 
-  cloud:
-    consul:
-      host: ${CONSUL_HOST:localhost}          # Адрес Consul (по умолчанию localhost)
-      port: ${CONSUL_PORT:8500}               # Порт Consul (8500 по умолчанию)
-      discovery:
-        service-name: accounts-app
+# Используем Sevice Discovry Kubrnettes, пока комментируем consul
+#  cloud:
+#    consul:
+#      host: ${CONSUL_HOST:localhost}          # Адрес Consul (по умолчанию localhost)
+#      port: ${CONSUL_PORT:8500}               # Порт Consul (8500 по умолчанию)
+#      discovery:
+#        service-name: accounts-app
+
 #      config:
 #        enabled: true            # Включаем Consul Config для внешней конфигурации
 #        defaultContext: application  # Контекст по умолчанию

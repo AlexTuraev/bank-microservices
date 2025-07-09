@@ -2,7 +2,7 @@ replicaCount: 3
 image:
   repository: accounts-app
 # tag: 0.0.1-SNAPSHOT
-  tag: 0.0.1
+  tag: 0.0.1-SNAPSHOT
   pullPolicy: IfNotPresent
 service:
   port: 8083
