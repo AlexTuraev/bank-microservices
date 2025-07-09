@@ -12,4 +12,5 @@ dependencies:
   - name: postgresql
     version: 12.1.0          # Версия чарта PostgreSQL
     repository: https://charts.bitnami.com/bitnami
-    alias: frontuidb
+    alias: frontui-db
+    condition: frontui-db.enabled
