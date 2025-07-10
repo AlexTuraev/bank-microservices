@@ -1,6 +1,11 @@
 spring:
   application:
     name: cash-app
+
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
