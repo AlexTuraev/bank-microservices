@@ -17,8 +17,8 @@
 
     <modules>
         <module>commons</module>
-        <module>cash-app</module>
         <module>accounts-app</module>
+        <module>cash-app</module>
         <module>frontui-app</module>
     </modules>
 
