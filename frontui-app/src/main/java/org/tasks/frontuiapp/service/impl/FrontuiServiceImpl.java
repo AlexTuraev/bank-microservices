@@ -1,0 +1,116 @@
+package org.tasks.frontuiapp.service.impl;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.tasks.frontuiapp.common.dto.CashDto;
+import org.tasks.frontuiapp.dto.ChangePswDto;
+import org.tasks.frontuiapp.dto.MainDto;
+import org.tasks.frontuiapp.dto.UserDto;
+import org.tasks.frontuiapp.service.FrontuiService;
+
+@Service
+public class FrontuiServiceImpl implements FrontuiService {
+
+    private final RestTemplate restTemplate;
+    private final OAuth2AuthorizedClientManager manager;
+    private final PasswordEncoder passwordEncoder;
+
+    @Value("${accountsapp.url}")
+    private String ACCOUNT_SERVICE_URL;
+
+    @Value("${cashapp.url}")
+    private String CASH_SERVICE_URL;
+
+    public FrontuiServiceImpl(RestTemplate restTemplate, OAuth2AuthorizedClientManager manager, PasswordEncoder passwordEncoder) {
+        this.restTemplate = restTemplate;
+        this.manager = manager;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public Boolean createAccount(UserDto userDto) {
+        try {
+            String accessToken = getOauth2Token();
+            // -------------------------------------------------------------------------------------
+
+            RequestEntity<UserDto> requestEntity = RequestEntity
+                    .post(ACCOUNT_SERVICE_URL + "/account")
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                    .body(new UserDto(userDto.getLogin(), passwordEncoder.encode(userDto.getPassword()), userDto.getName(), userDto.getBirthdate()));
+
+            var s = restTemplate.exchange(requestEntity, String.class);
+            // -------------------------------------------------------------------------------------
+
+            return Boolean.TRUE;
+        }
+        catch (Exception e) {
+            throw new UsernameNotFoundException("Not found or service is down");
+        }
+    }
+
+    @Override
+    public void changePassword(String login, String password) {
+        String accessToken = getOauth2Token();
+
+        RequestEntity<ChangePswDto> requestEntity = RequestEntity
+                .post(ACCOUNT_SERVICE_URL + "/editpsw")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .body(ChangePswDto.builder()
+                        .login(login)
+                        .passwordHash(passwordEncoder.encode(password))
+                        .build());
+
+        restTemplate.exchange(requestEntity, String.class);
+    }
+
+    @Override
+    public MainDto getMainModelData(String login) {
+        String accessToken = getOauth2Token();
+
+        RequestEntity<String> requestEntity = RequestEntity
+                .post(ACCOUNT_SERVICE_URL + "/get-users-data")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .body(login);
+
+        ResponseEntity<MainDto> response = restTemplate.exchange(requestEntity, MainDto.class);
+        return response.getBody();
+    }
+
+    @Override
+    public Boolean cash(CashDto cashDto) {
+        String accessToken = getOauth2Token();
+
+        if (cashDto.getAction().equals("GET")) {
+            cashDto.setValue(cashDto.getValue().negate());
+        }
+
+        RequestEntity<CashDto> requestEntity = RequestEntity
+                .post(CASH_SERVICE_URL + "/cash")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .body(cashDto);
+
+        ResponseEntity<?> response = restTemplate.exchange(requestEntity, Object.class);
+        return response.getStatusCode() == HttpStatus.OK ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    private String getOauth2Token() {
+        OAuth2AuthorizedClient client = manager.authorize(OAuth2AuthorizeRequest
+                .withClientRegistrationId("front-ui")
+                .principal("system")
+                .build()
+        );
+
+        return client.getAccessToken().getTokenValue();
+    }
+
+}

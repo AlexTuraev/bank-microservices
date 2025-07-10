@@ -1,0 +1,24 @@
+package org.tasks.accountsapp.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ExtUsersModel {
+
+    private String name;
+
+    private LocalDate birthdate;
+
+    private List<UserEntity> users;
+
+
+}

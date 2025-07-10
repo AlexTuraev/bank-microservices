@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts-app-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: accounts-app-deployment
+  template:
+    metadata:
+      labels:
+        app: accounts-app-deployment
+    spec:
+      containers:
+        - name: accounts-app
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: SPRING_DATASOURCE_URL_ACCOUNTS
+              value: "jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb"
+#              value: {{ .Values.config.database_url }}
+            - name: SPRING_DATASOURCE_USERNAME_ACCOUNTS
+#              value: "user"
+              value: {{ .Values.config.database_username }}
+            - name: SPRING_DATASOURCE_PASSWORD_ACCOUNTS
+#              value: "password"
+              value: {{ .Values.config.database_password }}
+#              valueFrom:
+#                secretKeyRef:
+#                  name: account-db-secret
+#                  key: password

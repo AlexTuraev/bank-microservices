@@ -1,0 +1,29 @@
+replicaCount: 1
+image:
+  repository: accounts-app
+#  tag: 2.0
+  tag: 0.0.1-SNAPSHOT
+  pullPolicy: IfNotPresent
+service:
+  port: 8083
+#  config:
+#    database_url: "jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb"
+config:
+  database_url: jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb
+  database_username: "user"
+# database_password_secret: "{{ .Release.Name }}-order-db-postgresql"
+  database_password: "password"
+
+account-db:
+  enabled: true
+  # Override values from the official postgresql chart
+  auth:
+    database: accountdb
+    username: user
+    # Use existingSecret or provide password (less secure for production)
+#    existingSecret: "{{ .Release.Name }}-account-db-postgresql" # Name of the secret to use/create
+    password: "password" # Example: Not recommended for production
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi # Small size for example
