@@ -1,6 +1,7 @@
 replicaCount: 1
 image:
   repository: cash-app
+#  tag: 2.0
   tag: 0.0.1-SNAPSHOT
   pullPolicy: IfNotPresent
 service:

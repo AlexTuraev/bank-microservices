@@ -54,3 +54,8 @@ management:
 application:
   secret:
     key: ${FRONTUI_SECRET_REMEMBERME_KEY:secretkey}
+
+accountsapp:
+  url: ${ACCOUNTS_SERVICE_URL:http://accounts-app}
+cashapp:
+  url: ${CASH_SERVICE_URL:http://cash-app}
