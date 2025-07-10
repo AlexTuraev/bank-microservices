@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.tasks.accountsapp.enums.CurrencyType;
+import org.tasks.commons.enums.CurrencyType;
 
 import java.math.BigDecimal;
 

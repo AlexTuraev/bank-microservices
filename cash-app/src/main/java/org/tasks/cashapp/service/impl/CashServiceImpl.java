@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.tasks.aaacommons.dto.CashDto;
+import org.tasks.commons.dto.CashDto;
 import org.tasks.cashapp.service.CashService;
 
 @Service

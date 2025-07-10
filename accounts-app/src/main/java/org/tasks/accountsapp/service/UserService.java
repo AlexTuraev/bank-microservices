@@ -1,6 +1,6 @@
 package org.tasks.accountsapp.service;
 
-import org.tasks.aaacommons.dto.CashDto;
+import org.tasks.commons.dto.CashDto;
 import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.dto.ExtUsersDto;
 import org.tasks.accountsapp.dto.UserDto;

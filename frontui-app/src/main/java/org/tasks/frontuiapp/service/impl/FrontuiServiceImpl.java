@@ -1,10 +1,10 @@
 package org.tasks.frontuiapp.service.impl;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
@@ -12,13 +12,11 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.tasks.aaacommons.dto.CashDto;
+import org.tasks.commons.dto.CashDto;
 import org.tasks.frontuiapp.dto.ChangePswDto;
 import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
 import org.tasks.frontuiapp.service.FrontuiService;
-
-import java.util.List;
 
 @Service
 public class FrontuiServiceImpl implements FrontuiService {
@@ -26,6 +24,12 @@ public class FrontuiServiceImpl implements FrontuiService {
     private final RestTemplate restTemplate;
     private final OAuth2AuthorizedClientManager manager;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${accountsapp.url}")
+    private String ACCOUNT_SERVICE_URL;
+
+    @Value("${cashapp.url}")
+    private String CASH_SERVICE_URL;
 
     public FrontuiServiceImpl(RestTemplate restTemplate, OAuth2AuthorizedClientManager manager, PasswordEncoder passwordEncoder) {
         this.restTemplate = restTemplate;
@@ -40,7 +44,7 @@ public class FrontuiServiceImpl implements FrontuiService {
             // -------------------------------------------------------------------------------------
 
             RequestEntity<UserDto> requestEntity = RequestEntity
-                    .post("http://accounts-app/account")
+                    .post(ACCOUNT_SERVICE_URL + "/account")
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                     .body(new UserDto(userDto.getLogin(), passwordEncoder.encode(userDto.getPassword()), userDto.getName(), userDto.getBirthdate()));
 
@@ -59,7 +63,7 @@ public class FrontuiServiceImpl implements FrontuiService {
         String accessToken = getOauth2Token();
 
         RequestEntity<ChangePswDto> requestEntity = RequestEntity
-                .post("http://accounts-app/editpsw")
+                .post(ACCOUNT_SERVICE_URL + "/editpsw")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .body(ChangePswDto.builder()
                         .login(login)
@@ -74,7 +78,7 @@ public class FrontuiServiceImpl implements FrontuiService {
         String accessToken = getOauth2Token();
 
         RequestEntity<String> requestEntity = RequestEntity
-                .post("http://accounts-app/get-users-data")
+                .post(ACCOUNT_SERVICE_URL + "/get-users-data")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .body(login);
 
@@ -91,7 +95,7 @@ public class FrontuiServiceImpl implements FrontuiService {
         }
 
         RequestEntity<CashDto> requestEntity = RequestEntity
-                .post("http://cash-app/cash")
+                .post(CASH_SERVICE_URL + "/cash")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .body(cashDto);
 
