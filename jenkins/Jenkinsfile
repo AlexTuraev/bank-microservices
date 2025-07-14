@@ -51,13 +51,6 @@ pipeline {
                    docker build -t ${DOCKER_REGISTRY}/cash-app:${IMAGE_TAG} cash-app
                    docker build -t ${DOCKER_REGISTRY}/frontui-app:${IMAGE_TAG} frontui-app
                    """
-
-//                 sh """
-//                 docker build -t ${DOCKER_REGISTRY}/commons:${IMAGE_TAG} commons
-//                 docker build -t ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG} accounts-app
-//                 docker build -t ${DOCKER_REGISTRY}/cash-app:${IMAGE_TAG} cash-app
-//                 docker build -t ${DOCKER_REGISTRY}/frontui-app:${IMAGE_TAG} frontui-app
-//                 """
             }
         }
 
