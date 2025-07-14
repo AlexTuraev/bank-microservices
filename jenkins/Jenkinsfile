@@ -14,7 +14,35 @@ pipeline {
     }
 
     stages {
-
+//         stage('Build & Unit Tests') {
+//             stage('Commonms Service') {
+//                 docker build -t ${DOCKER_REGISTRY}/commons:${IMAGE_TAG} commons
+//             }
+//
+//             parallel {
+//                 stage('Accounts-app Service') {
+//                     steps {
+//                         dir('accounts-app') {
+//                             sh 'mvn clean test'
+//                         }
+//                     }
+//                 }
+//                 stage('Cash-app Service') {
+//                     steps {
+//                         dir('cash-app') {
+//                             sh 'mvn clean test'
+//                         }
+//                     }
+//                 }
+//                 stage('Frontui-app Service') {
+//                     steps {
+//                         dir('frontui-app') {
+//                             sh 'mvn clean test'
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
         stage('Build Docker Images') {
             steps {
