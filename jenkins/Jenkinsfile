@@ -3,10 +3,14 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY = credentials('DOCKER_REGISTRY')
-        DB_PASSWORD     = credentials('DB_PASSWORD')
         GITHUB_USERNAME = credentials('GITHUB_USERNAME')
-        DB_NAME         = 'mydb'
-        DB_USER         = 'myuser'
+        DB_ACCOUNT_PASSWORD     = credentials('DB_ACCOUNT_PASSWORD')
+        DB_ACCOUNT_NAME         = 'accountdb'
+        DB_ACCOUNT_USER         = 'user'
+
+        DB_FRONTUI_PASSWORD     = credentials('DB_FRONTUI_PASSWORD')
+        DB_FRONTUI_NAME         = 'frontuidb'
+        DB_FRONTUI_USER         = 'user'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
     }
 
@@ -68,9 +72,9 @@ pipeline {
 
                 helm upgrade --install postgres bitnami/postgresql \\
                   --namespace test --create-namespace \\
-                  --set auth.database=${DB_NAME} \\
-                  --set auth.username=${DB_USER} \\
-                  --set auth.password=${DB_PASSWORD}
+                  --set auth.database=${DB_ACCOUNT_NAME} \\
+                  --set auth.username=${DB_ACCOUNT_USER} \\
+                  --set auth.password=${DB_ACCOUNT_PASSWORD}
                 """
             }
         }
@@ -78,12 +82,12 @@ pipeline {
         stage('Create DB Secrets for TEST') {
             steps {
                 sh """
-                kubectl create secret generic customer-service-customer-db \\
-                  --from-literal=password=${DB_PASSWORD} \\
+                kubectl create secret generic account-service-db \\
+                  --from-literal=password=${DB_ACCOUNT_PASSWORD} \\
                   -n test --dry-run=client -o yaml | kubectl apply -f -
 
-                kubectl create secret generic order-service-order-db \\
-                  --from-literal=password=${DB_PASSWORD} \\
+                kubectl create secret generic frontui-service-db \\
+                  --from-literal=password=${DB_FRONTUI_PASSWORD} \\
                   -n test --dry-run=client -o yaml | kubectl apply -f -
                 """
             }
@@ -92,23 +96,32 @@ pipeline {
         stage('Helm Deploy to TEST') {
             steps {
                 sh """
-                helm upgrade --install customer-service my-microservices-app/charts/customer-service \\
+                helm upgrade --install accounts-app-service helm_my_app/charts/accounts-app \\
                   --namespace test --create-namespace \\
-                  --set image.repository=${DOCKER_REGISTRY}/customer-service \\
+                  --set image.repository=${DOCKER_REGISTRY}/accounts-app-service \\
                   --set image.tag=${IMAGE_TAG} \\
                   --set ingress.enabled=true \\
                   --set ingress.hosts[0].host=customer.test.local \\
                   --set ingress.hosts[0].paths[0].path="/" \\
                   --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific"
 
-                helm upgrade --install order-service my-microservices-app/charts/order-service \\
+                helm upgrade --install cash-app-service helm_my_app/charts/cash-app \\
                   --namespace test --create-namespace \\
-                  --set image.repository=${DOCKER_REGISTRY}/order-service \\
+                  --set image.repository=${DOCKER_REGISTRY}/cash-app-service \\
                   --set image.tag=${IMAGE_TAG} \\
                   --set ingress.enabled=true \\
                   --set ingress.hosts[0].host=order.test.local \\
                   --set ingress.hosts[0].paths[0].path="/" \\
                   --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific"
+
+                  helm upgrade --install frontui-app-service helm_my_app/charts/frontui-app \\
+                                    --namespace test --create-namespace \\
+                                    --set image.repository=${DOCKER_REGISTRY}/frontui-app-service \\
+                                    --set image.tag=${IMAGE_TAG} \\
+                                    --set ingress.enabled=true \\
+                                    --set ingress.hosts[0].host=order.test.local \\
+                                    --set ingress.hosts[0].paths[0].path="/" \\
+                                    --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific"
                 """
             }
         }
@@ -124,9 +137,9 @@ pipeline {
                 sh """
                 helm upgrade --install postgres bitnami/postgresql \\
                   --namespace prod --create-namespace \\
-                  --set auth.database=${DB_NAME} \\
-                  --set auth.username=${DB_USER} \\
-                  --set auth.password=${DB_PASSWORD}
+                  --set auth.database=${DB_ACCOUNT_NAME} \\
+                  --set auth.username=${DB_ACCOUNT_USER} \\
+                  --set auth.password=${DB_ACCOUNT_PASSWORD}
                 """
             }
         }
@@ -134,12 +147,12 @@ pipeline {
         stage('Create DB Secrets for PROD') {
             steps {
                 sh """
-                kubectl create secret generic customer-service-customer-db \\
-                  --from-literal=password=${DB_PASSWORD} \\
+                kubectl create secret generic account-service-db \\
+                  --from-literal=password=${DB_ACCOUNT_PASSWORD} \\
                   -n prod --dry-run=client -o yaml | kubectl apply -f -
 
-                kubectl create secret generic order-service-order-db \\
-                  --from-literal=password=${DB_PASSWORD} \\
+                kubectl create secret generic frontui-service-db \\
+                  --from-literal=password=${DB_FRONTUI_PASSWORD} \\
                   -n prod --dry-run=client -o yaml | kubectl apply -f -
                 """
             }
@@ -148,23 +161,32 @@ pipeline {
         stage('Helm Deploy to PROD') {
             steps {
                 sh """
-                helm upgrade --install customer-service my-microservices-app/charts/customer-service \\
+                helm upgrade --install accounts-app-service helm_my_app/charts/accounts-app \\
                   --namespace prod --create-namespace \\
-                  --set image.repository=${DOCKER_REGISTRY}/customer-service \\
+                  --set image.repository=${DOCKER_REGISTRY}/accounts-app-service \\
                   --set image.tag=${IMAGE_TAG} \\
                   --set ingress.enabled=true \\
                   --set ingress.hosts[0].host=customer.prod.local \\
                   --set ingress.hosts[0].paths[0].path="/" \\
                   --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific"
 
-                helm upgrade --install order-service my-microservices-app/charts/order-service \\
+                helm upgrade --install cash-app-service helm_my_app/charts/cash-app \\
                   --namespace prod --create-namespace \\
-                  --set image.repository=${DOCKER_REGISTRY}/order-service \\
+                  --set image.repository=${DOCKER_REGISTRY}/cash-app-service \\
                   --set image.tag=${IMAGE_TAG} \\
                   --set ingress.enabled=true \\
                   --set ingress.hosts[0].host=order.prod.local \\
                   --set ingress.hosts[0].paths[0].path="/" \\
                   --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific"
+
+                  helm upgrade --install frontui-app-service helm_my_app/charts/frontui-app \\
+                                    --namespace prod --create-namespace \\
+                                    --set image.repository=${DOCKER_REGISTRY}/frontui-app-service \\
+                                    --set image.tag=${IMAGE_TAG} \\
+                                    --set ingress.enabled=true \\
+                                    --set ingress.hosts[0].host=order.prod.local \\
+                                    --set ingress.hosts[0].paths[0].path="/" \\
+                                    --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific"
                 """
             }
         }
