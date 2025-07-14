@@ -4,11 +4,10 @@ pipeline {
     environment {
         DOCKER_REGISTRY = credentials('DOCKER_REGISTRY')
         GITHUB_USERNAME = credentials('GITHUB_USERNAME')
-        DB_ACCOUNT_PASSWORD     = credentials('DB_ACCOUNT_PASSWORD')
+        DB_PASSWORD     = credentials('DB_PASSWORD')
         DB_ACCOUNT_NAME         = 'accountdb'
         DB_ACCOUNT_USER         = 'user'
 
-        DB_FRONTUI_PASSWORD     = credentials('DB_FRONTUI_PASSWORD')
         DB_FRONTUI_NAME         = 'frontuidb'
         DB_FRONTUI_USER         = 'user'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
@@ -74,7 +73,7 @@ pipeline {
                   --namespace test --create-namespace \\
                   --set auth.database=${DB_ACCOUNT_NAME} \\
                   --set auth.username=${DB_ACCOUNT_USER} \\
-                  --set auth.password=${DB_ACCOUNT_PASSWORD}
+                  --set auth.password=${DB_PASSWORD}
                 """
             }
         }
@@ -83,11 +82,11 @@ pipeline {
             steps {
                 sh """
                 kubectl create secret generic account-service-db \\
-                  --from-literal=password=${DB_ACCOUNT_PASSWORD} \\
+                  --from-literal=password=${DB_PASSWORD} \\
                   -n test --dry-run=client -o yaml | kubectl apply -f -
 
                 kubectl create secret generic frontui-service-db \\
-                  --from-literal=password=${DB_FRONTUI_PASSWORD} \\
+                  --from-literal=password=${DB_PASSWORD} \\
                   -n test --dry-run=client -o yaml | kubectl apply -f -
                 """
             }
@@ -139,7 +138,7 @@ pipeline {
                   --namespace prod --create-namespace \\
                   --set auth.database=${DB_ACCOUNT_NAME} \\
                   --set auth.username=${DB_ACCOUNT_USER} \\
-                  --set auth.password=${DB_ACCOUNT_PASSWORD}
+                  --set auth.password=${DB_PASSWORD}
                 """
             }
         }
@@ -148,11 +147,11 @@ pipeline {
             steps {
                 sh """
                 kubectl create secret generic account-service-db \\
-                  --from-literal=password=${DB_ACCOUNT_PASSWORD} \\
+                  --from-literal=password=${DB_PASSWORD} \\
                   -n prod --dry-run=client -o yaml | kubectl apply -f -
 
                 kubectl create secret generic frontui-service-db \\
-                  --from-literal=password=${DB_FRONTUI_PASSWORD} \\
+                  --from-literal=password=${DB_PASSWORD} \\
                   -n prod --dry-run=client -o yaml | kubectl apply -f -
                 """
             }
