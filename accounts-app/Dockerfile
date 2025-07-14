@@ -18,8 +18,8 @@ COPY src ./src
 
 
 
-COPY ../commons /app/commons
-RUN cd commons && mvn clean package -DskipTests
+#COPY ../commons /app/commons
+#RUN cd commons && mvn clean package -DskipTests
 
 
 
