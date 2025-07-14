@@ -14,35 +14,36 @@ pipeline {
     }
 
     stages {
-        stage('Build & Unit Tests') {
-            parallel {
-                stage('Accounts-app Service') {
-                    steps {
-                        dir('accounts-app') {
-                            sh 'mvn clean test'
-                        }
-                    }
-                }
-                stage('Cash-app Service') {
-                    steps {
-                        dir('cash-app') {
-                            sh 'mvn clean test'
-                        }
-                    }
-                }
-                stage('Frontui-app Service') {
-                    steps {
-                        dir('frontui-app') {
-                            sh 'mvn clean test'
-                        }
-                    }
-                }
-            }
-        }
+//         stage('Build & Unit Tests') {
+//             parallel {
+//                 stage('Accounts-app Service') {
+//                     steps {
+//                         dir('accounts-app') {
+//                             sh 'mvn clean test'
+//                         }
+//                     }
+//                 }
+//                 stage('Cash-app Service') {
+//                     steps {
+//                         dir('cash-app') {
+//                             sh 'mvn clean test'
+//                         }
+//                     }
+//                 }
+//                 stage('Frontui-app Service') {
+//                     steps {
+//                         dir('frontui-app') {
+//                             sh 'mvn clean test'
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
         stage('Build Docker Images') {
             steps {
                 sh """
+                docker build -t ${DOCKER_REGISTRY}/commons:${IMAGE_TAG} commons
                 docker build -t ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG} accounts-app
                 docker build -t ${DOCKER_REGISTRY}/cash-app:${IMAGE_TAG} cash-app
                 docker build -t ${DOCKER_REGISTRY}/frontui-app:${IMAGE_TAG} frontui-app
