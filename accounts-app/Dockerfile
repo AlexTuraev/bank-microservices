@@ -1,10 +1,3 @@
-#FROM eclipse-temurin:21-jdk-alpine
-#WORKDIR /app
-#COPY target/*.jar app.jar
-##EXPOSE ${ACCOUNTS_SERVER_PORT}
-#ENTRYPOINT ["java", "-jar", "app.jar"]
-
-
 FROM maven:3.9.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
@@ -15,14 +8,6 @@ RUN mvn dependency:go-offline
 
 COPY src ./src
 
-
-
-
-#COPY ../commons /app/commons
-#RUN cd commons && mvn clean package -DskipTests
-
-
-
 COPY . .
 RUN mvn package -DskipTests
 
@@ -30,7 +15,5 @@ FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 COPY --from=build /app/target/accounts-app-*.jar app.jar
-
-#EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
