@@ -46,7 +46,12 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                sh docker build -t ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG} accounts-app
+                            sh """
+
+                            docker build -t ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG} accounts-app
+
+                            """
+
 //                 sh """
 //                 docker build -t ${DOCKER_REGISTRY}/commons:${IMAGE_TAG} commons
 //                 docker build -t ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG} accounts-app
@@ -59,7 +64,12 @@ pipeline {
         stage('Push Docker Images') {
             steps {
                 withCredentials([string(credentialsId: 'GHCR_TOKEN', variable: 'GHCR_TOKEN')]) {
-                    sh docker push ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG}
+                                    sh """
+
+                                    docker push ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG}
+
+                                    """
+
 //                     sh """
 //                     echo \$GHCR_TOKEN | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
 //                     docker push ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG}
