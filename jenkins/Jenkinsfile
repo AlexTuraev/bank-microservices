@@ -15,6 +15,10 @@ pipeline {
 
     stages {
         stage('Build & Unit Tests') {
+            stage('Commonms Service') {
+                docker build -t ${DOCKER_REGISTRY}/commons:${IMAGE_TAG} commons
+            }
+
             parallel {
                 stage('Accounts-app Service') {
                     steps {
