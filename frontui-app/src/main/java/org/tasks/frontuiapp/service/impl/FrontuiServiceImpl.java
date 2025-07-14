@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.tasks.commons.dto.CashDto;
+import org.tasks.frontuiapp.commons.dto.CashDto;
 import org.tasks.frontuiapp.dto.ChangePswDto;
 import org.tasks.frontuiapp.dto.MainDto;
 import org.tasks.frontuiapp.dto.UserDto;
