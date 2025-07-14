@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.tasks.commons.enums.CurrencyType;
+import org.tasks.accountsapp.dto.commons.enums.CurrencyType;
 
 import java.math.BigDecimal;
 

@@ -2,11 +2,11 @@ package org.tasks.accountsapp.service.impl;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.tasks.commons.dto.CashDto;
-import org.tasks.commons.enums.CurrencyType;
 import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.dto.ExtUsersDto;
 import org.tasks.accountsapp.dto.UserDto;
+import org.tasks.accountsapp.dto.commons.dto.CashDto;
+import org.tasks.accountsapp.dto.commons.enums.CurrencyType;
 import org.tasks.accountsapp.mapper.ExtUserMapper;
 import org.tasks.accountsapp.mapper.UserMapper;
 import org.tasks.accountsapp.model.BankAccountEntity;
