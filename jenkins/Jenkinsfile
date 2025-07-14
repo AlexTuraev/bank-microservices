@@ -46,14 +46,11 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-//             docker build -t ${DOCKER_REGISTRY}/commons:${IMAGE_TAG} commons
-//                             docker build -t ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG} accounts-app
-//                             docker build -t ${DOCKER_REGISTRY}/cash-app:${IMAGE_TAG} cash-app
-//                             docker build -t ${DOCKER_REGISTRY}/frontui-app:${IMAGE_TAG} frontui-app
                 sh """
-
-
-                docker build -t ${DOCKER_REGISTRY}/bank-microservices:${IMAGE_TAG} bank-microservices
+                docker build -t ${DOCKER_REGISTRY}/commons:${IMAGE_TAG} commons
+                docker build -t ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG} accounts-app
+                docker build -t ${DOCKER_REGISTRY}/cash-app:${IMAGE_TAG} cash-app
+                docker build -t ${DOCKER_REGISTRY}/frontui-app:${IMAGE_TAG} frontui-app
                 """
             }
         }
@@ -63,7 +60,6 @@ pipeline {
                 withCredentials([string(credentialsId: 'GHCR_TOKEN', variable: 'GHCR_TOKEN')]) {
                     sh """
                     echo \$GHCR_TOKEN | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
-                    docker push ${DOCKER_REGISTRY}/commons:${IMAGE_TAG}
                     docker push ${DOCKER_REGISTRY}/accounts-app:${IMAGE_TAG}
                     docker push ${DOCKER_REGISTRY}/cash-app:${IMAGE_TAG}
                     docker push ${DOCKER_REGISTRY}/frontui-app:${IMAGE_TAG}
