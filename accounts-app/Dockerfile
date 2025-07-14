@@ -15,6 +15,15 @@ RUN mvn dependency:go-offline
 
 COPY src ./src
 
+
+
+
+COPY ../commons /app/commons
+RUN cd commons && mvn clean package -DskipTests
+
+
+
+COPY . .
 RUN mvn package -DskipTests
 
 FROM eclipse-temurin:21-jre
