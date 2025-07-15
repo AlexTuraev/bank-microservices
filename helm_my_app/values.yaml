@@ -1,0 +1,14 @@
+accounts-app:
+  replicaCount: 1
+  image:
+    tag: "1.0.0"
+
+cash-app:
+  replicaCount: 1
+  image:
+    tag: "1.0.0"
+
+frontui-app-app:
+  replicaCount: 1
+  image:
+    tag: "1.0.0"

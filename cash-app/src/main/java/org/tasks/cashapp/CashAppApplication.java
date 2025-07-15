@@ -1,13 +1,13 @@
-package org.tasks.frontuiapp;
+package org.tasks.cashapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TemplateAppApplication {
+public class CashAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TemplateAppApplication.class, args);
+        SpringApplication.run(CashAppApplication.class, args);
     }
 
 }

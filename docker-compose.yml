@@ -1,0 +1,89 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1.3
+    container_name: keycloak
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+    ports:
+      - "${KEYCLOAK_PORT}:${KEYCLOAK_PORT}"
+    networks:
+      - app_network
+
+  consul:
+    image: consul:1.15.0
+    container_name: consul
+    ports:
+      - "${CONSUL_PORT}:${CONSUL_PORT}"  # Web UI
+      - "8600:8600/udp"  # DNS
+    environment:
+      - CONSUL_BIND_ADDR=0.0.0.0
+    networks:
+      - app_network
+#    volumes:
+#      - consul_data:/consul/data
+
+  frontui-service:
+    build:
+      context: ./frontui-app
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTUI_SERVER_PORT}:${FRONTUI_SERVER_PORT}"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${FRONTUI_DB_HOST}:5433/${FRONTUI_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${FRONTUI_DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${FRONTUI_DB_PASSWORD}
+      SERVER_PORT: ${FRONTUI_SERVER_PORT}
+      APPLICATION_SECRET_KEY: ${FRONTUI_SECRET_REMEMBERME_KEY}
+    depends_on:
+      - consul
+      - frontui-db
+    networks:
+      - app_network
+
+  frontui-db:
+    image: postgres:16
+    container_name: frontui-db
+    environment:
+      POSTGRES_DB: ${FRONTUI_DB_NAME}
+      POSTGRES_USER: ${FRONTUI_DB_USERNAME}
+      POSTGRES_PASSWORD: ${FRONTUI_DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    networks:
+      - app_network
+
+  accounts-service:
+    build:
+      context: ./accounts-app
+      dockerfile: Dockerfile
+    ports:
+      - "${ACCOUNTS_SERVER_PORT}:${ACCOUNTS_SERVER_PORT}"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${ACCOUNTS_DB_HOST}:5434/${ACCOUNTS_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${ACCOUNTS_DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${ACCOUNTS_DB_PASSWORD}
+      SERVER_PORT: ${ACCOUNTS_SERVER_PORT}
+    depends_on:
+      - consul
+      - accounts-db
+    networks:
+      - app_network
+
+  accounts-db:
+    image: postgres:16
+    container_name: accounts-db
+    environment:
+      POSTGRES_DB: ${ACCOUNTS_DB_NAME}
+      POSTGRES_USER: ${ACCOUNTS_DB_USERNAME}
+      POSTGRES_PASSWORD: ${ACCOUNTS_DB_PASSWORD}
+    ports:
+      - "5434:5432"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
