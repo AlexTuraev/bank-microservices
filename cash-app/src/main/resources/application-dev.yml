@@ -2,9 +2,7 @@ spring:
   application:
     name: cash-app
 
-  cloud:
-    compatibility-verifier:
-      enabled: false
+
 
   datasource:
     url: ${SPRING_DATASOURCE_URL}
@@ -33,12 +31,16 @@ spring:
         jwt:
           issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/master}
 
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
 #  cloud:
-#    consul:
-#      host: ${CONSUL_HOST:localhost}          # Адрес Consul (по умолчанию localhost)
-#      port: ${CONSUL_PORT:8500}               # Порт Consul (8500 по умолчанию)
-#      discovery:
-#        service-name: cash-app
+    consul:
+      host: ${CONSUL_HOST:localhost}          # Адрес Consul (по умолчанию localhost)
+      port: ${CONSUL_PORT:8500}               # Порт Consul (8500 по умолчанию)
+      discovery:
+        service-name: cash-app
 #      config:
 #        enabled: true            # Включаем Consul Config для внешней конфигурации
 #        prefixes: config           # Префикс в KV-хранилище Consul (по умолчанию "config")

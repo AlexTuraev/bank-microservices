@@ -2,8 +2,8 @@ package org.tasks.frontuiapp.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-//import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -23,7 +23,7 @@ import org.tasks.frontuiapp.service.JpaUserDetailsService;
 import javax.sql.DataSource;
 
 @Configuration
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class SecurityConfig {
 
     @Value("${application.secret.key}")
@@ -61,7 +61,7 @@ public class SecurityConfig {
     }
 
     @Bean
-//    @LoadBalanced
+    @LoadBalanced
     public RestTemplate accountsRestTemplate(RestTemplateBuilder builder) {
 //        return builder.rootUri("http://accounts-app").build();
         return builder.build();

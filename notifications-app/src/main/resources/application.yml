@@ -9,6 +9,19 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_SERVER_URL:localhost:9092}
+      group-id: notifications-consumer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+#              packages: org.tasks.notificationsapp.commons.model
+              packages: org.tasks.*
+
 
 server:
   port: ${SERVER_PORT:8089}
