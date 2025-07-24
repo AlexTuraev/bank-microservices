@@ -139,8 +139,14 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.tasks</groupId>
+            <artifactId>commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
-<!--        <dependency>-->
+        <!--        <dependency>-->
 <!--            <groupId>org.tasks</groupId>-->
 <!--            <artifactId>commons</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->

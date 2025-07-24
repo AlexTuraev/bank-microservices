@@ -2,7 +2,6 @@ package org.tasks.accountsapp.service.impl;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.tasks.accountsapp.commons.model.NotificationModel;
 import org.tasks.accountsapp.dto.ChangePswDto;
 import org.tasks.accountsapp.dto.ExtUsersDto;
 import org.tasks.accountsapp.dto.UserDto;
@@ -17,6 +16,7 @@ import org.tasks.accountsapp.repository.BankAccountRepository;
 import org.tasks.accountsapp.repository.UserRepository;
 import org.tasks.accountsapp.service.ProducerService;
 import org.tasks.accountsapp.service.UserService;
+import org.tasks.commons.model.NotificationModel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

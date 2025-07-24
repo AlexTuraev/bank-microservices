@@ -2,8 +2,8 @@ package org.tasks.accountsapp.service.impl;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.tasks.accountsapp.commons.model.NotificationModel;
 import org.tasks.accountsapp.service.ProducerService;
+import org.tasks.commons.model.NotificationModel;
 
 @Service
 public class ProducerServiceImpl implements ProducerService {
