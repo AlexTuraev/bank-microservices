@@ -21,6 +21,8 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
+            - name: KAFKA_SERVER_URL
+              value: "my-kafka:9092"
             - name: SPRING_DATASOURCE_URL_ACCOUNTS
               value: "jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb"
 #              value: {{ .Values.config.database_url }}
