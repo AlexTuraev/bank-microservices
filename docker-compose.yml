@@ -84,6 +84,13 @@ services:
     networks:
       - app_network
 
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+    environment:
+      - STORAGE_TYPE=mem
+
 networks:
   app_network:
     driver: bridge
