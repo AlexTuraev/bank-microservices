@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontui-app-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: frontui-app-deployment
+  template:
+    metadata:
+      labels:
+        app: frontui-app-deployment
+    spec:
+      containers:
+        - name: accounts-app
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: SPRING_DATASOURCE_URL_FRONTUI
+              value: "jdbc:postgresql://{{ .Release.Name }}-frontui-db:5432/frontuidb"
+#              value: {{ .Values.config.database_url }}
+            - name: SPRING_DATASOURCE_USERNAME_FRONTUI
+#              value: "user"
+              value: {{ .Values.config.database_username }}
+            - name: SPRING_DATASOURCE_PASSWORD_FRONTUI
+#              value: "password"
+              value: {{ .Values.config.database_password }}
+            - name: ZIPKIN_URL
+              value: {{ .Values.zipkin.url } }:{{ .Values.zipkin.port }}
+#              valueFrom:
+#                secretKeyRef:
+#                  name: account-db-secret
+#                  key: password

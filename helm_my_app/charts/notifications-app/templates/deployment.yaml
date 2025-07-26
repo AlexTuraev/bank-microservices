@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-app-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: notifications-app-deployment
+  template:
+    metadata:
+      labels:
+        app: notifications-app-deployment
+    spec:
+      containers:
+        - name: notifications-app
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: KAFKA_SERVER_URL
+              value: "my-kafka:9092"
+            - name: ZIPKIN_URL
+              value: {{ .Values.zipkin.url } }:{{ .Values.zipkin.port }}

@@ -1,0 +1,15 @@
+apiVersion: v2
+name: zipkin-nodeport
+description: A Helm chart for deploying Zipkin with in-memory storage and external access via NodePort in Kubernetes
+type: application
+version: 0.1.0
+appVersion: 2.23.7
+home: https://github.com/openzipkin/zipkin
+sources:
+  - https://github.com/openzipkin/zipkin-kubernetes
+icon: https://raw.githubusercontent.com/openzipkin/logo/master/pngs/logomark.png
+keywords:
+  - zipkin
+  - tracing
+  - distributed-tracing
+engine: gotpl

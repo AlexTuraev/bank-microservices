@@ -1,0 +1,26 @@
+image:
+  repository: openzipkin/zipkin
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  nodePort: 30000
+  port: 9411
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: zipkin.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
