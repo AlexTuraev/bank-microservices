@@ -158,6 +158,12 @@
             <version>3.5.0</version>
         </dependency>
 
+        <!--        Для Prometheus-->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
         <!--        <dependency>-->
 <!--            <groupId>org.tasks</groupId>-->
 <!--            <artifactId>commons</artifactId>-->
