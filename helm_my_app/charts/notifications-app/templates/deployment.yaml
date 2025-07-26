@@ -23,3 +23,5 @@ spec:
           env:
             - name: KAFKA_SERVER_URL
               value: "my-kafka:9092"
+            - name: ZIPKIN_URL
+              value: {{ .Values.zipkin.url } }:{{ .Values.zipkin.port }}

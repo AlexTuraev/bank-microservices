@@ -23,6 +23,8 @@ spec:
           env:
             - name: KAFKA_SERVER_URL
               value: "my-kafka:9092"
+            - name: ZIPKIN_URL
+              value: {{ .Values.zipkin.url }}:{{ .Values.zipkin.port }}
             - name: SPRING_DATASOURCE_URL_ACCOUNTS
               value: "jdbc:postgresql://{{ .Release.Name }}-account-db:5432/accountdb"
 #              value: {{ .Values.config.database_url }}

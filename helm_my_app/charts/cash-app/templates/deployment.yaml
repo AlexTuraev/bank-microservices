@@ -20,3 +20,6 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: ZIPKIN_URL
+              value: {{ .Values.zipkin.url } }:{{ .Values.zipkin.port }}

@@ -27,3 +27,7 @@ frontui-db:
     persistence:
       enabled: true
       size: 1Gi # Small size for example
+
+zipkin:
+  url: my-zipkin
+  port: 9411
