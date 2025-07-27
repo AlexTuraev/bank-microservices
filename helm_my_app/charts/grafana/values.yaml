@@ -1,0 +1,16 @@
+admin:
+  password: admin  # Задайте пароль администратора
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-server:9090  # Адрес Prometheus
+        access: proxy
+        isDefault: true
+
+service:
+  type: ClusterIP
+  port: 3000  # Порт Grafana

@@ -1,5 +1,6 @@
 package org.tasks.accountsapp.controller;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +15,11 @@ import org.tasks.accountsapp.service.UserService;
 public class Oauth2Controller {
 
     private final UserService userService;
+    private final MeterRegistry meterRegistry;
 
-    public Oauth2Controller(UserService userService) {
+    public Oauth2Controller(UserService userService, MeterRegistry meterRegistry) {
         this.userService = userService;
+        this.meterRegistry = meterRegistry;
     }
 
     @PostMapping("/auth")
@@ -24,6 +27,7 @@ public class Oauth2Controller {
             @RequestBody String login
     ) {
         UserDto dto = userService.findByLogin(login);
+        meterRegistry.counter("user.login", "username", login).increment();
         return ResponseEntity.ok(dto);
     }
 
@@ -40,6 +44,7 @@ public class Oauth2Controller {
             @RequestBody ChangePswDto changePswDto
     ) {
         userService.editPassword(changePswDto);
+        meterRegistry.counter("user.edit.password", "username", changePswDto.getLogin()).increment();
         return ResponseEntity.ok().build();
     }
 

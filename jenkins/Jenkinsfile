@@ -44,6 +44,35 @@ pipeline {
 //             }
 //         }
 
+        stage('Install Helm') {
+                    steps {
+                        script {
+                            sh 'curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash'
+                        }
+                    }
+                }
+
+        stage('Deploy Prometheus') {
+                    steps {
+                        script {
+                            sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
+                            sh 'helm repo update'
+                            sh 'helm install prometheus prometheus-community/prometheus -f helm_my_app/charts/prometheus/values.yaml'
+                        }
+                    }
+                }
+
+        stage('Deploy Grafana') {
+                    steps {
+                        script {
+                            sh 'helm repo add grafana https://grafana.github.io/helm-charts'
+                            sh 'helm repo update'
+                            sh 'helm install grafana grafana/grafana -f helm_my_app/charts/grafana/values.yaml'
+                            sh 'kubectl port-forward svc/grafana 3000:3000'
+                        }
+                    }
+                }
+
         stage('Build Docker Images') {
             steps {
                    sh """
