@@ -68,7 +68,7 @@ pipeline {
                             sh 'helm repo add grafana https://grafana.github.io/helm-charts'
                             sh 'helm repo update'
                             sh 'helm install grafana grafana/grafana -f helm_my_app/charts/grafana/values.yaml'
-                            sh 'kubectl port-forward svc/grafana 3000:3000'
+//                             sh 'kubectl port-forward svc/grafana 3000:3000'
                         }
                     }
                 }
