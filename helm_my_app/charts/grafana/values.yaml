@@ -7,7 +7,7 @@ datasources:
     datasources:
       - name: Prometheus
         type: prometheus
-        url: http://prometheus-server:9090  # Адрес Prometheus
+        url: http://prometheus-server.default.svc.cluster.local  # Адрес Prometheus
         access: proxy
         isDefault: true
 
