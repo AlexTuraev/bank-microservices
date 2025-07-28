@@ -1,0 +1,48 @@
+server:
+  service:
+    type: ClusterIP
+    port: 9090
+  global:
+    scrape_interval: 30s      # Интервал сбора метрик
+    evaluation_interval: 30s  # Интервал оценки правил
+    scrape_timeout: 10s       # Тайм-аут сбора метрик
+
+  # Конфигурация сбора метрик
+  scrape_configs:
+    # Базовый мониторинг самого Prometheus
+#    - job_name: 'prometheus'
+#      static_configs:
+#        - targets: ['http://localhost:8090']
+
+
+    - job_name: 'accounts-app-service'              # Название задачи
+      metrics_path: '/actuator/prometheus'    # Путь к эндпоинту с метриками
+      scrape_interval: 15s                    # Интервал для получения — каждые 15 секунд
+      static_configs:
+        - targets: [ 'localhost:8083' ]         # Адрес (можно указать несколько — например, несколько подов в Kubernetes)
+          labels:
+            application: 'accounts-app'     # Дополнительный лейбл
+
+    - job_name: 'cash-app-service'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: [ 'localhost:8084' ]
+          labels:
+            application: 'cash-app'
+
+    - job_name: 'frontui-app-service'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: [ 'localhost:8082' ]
+          labels:
+            application: 'frontui-app'
+
+    - job_name: 'notifications-app-service'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: [ 'localhost:8089' ]
+          labels:
+            application: 'notifications-app'

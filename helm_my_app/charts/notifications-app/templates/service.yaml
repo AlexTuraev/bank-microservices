@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: notifications-app-svc
+spec:
+  ports:
+    - port: 8089
+      protocol: TCP
+      targetPort: 8089
+  selector:
+    app: notifications-app-deployment
+  type: ClusterIP
+status:
+  loadBalancer: {}

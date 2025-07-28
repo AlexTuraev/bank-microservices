@@ -1,0 +1,12 @@
+replicaCount: 1
+image:
+  repository: notifications-app
+#  tag: 2.0
+  tag: 0.0.1-SNAPSHOT
+  pullPolicy: IfNotPresent
+service:
+  port: 8089
+
+zipkin:
+  url: my-zipkin
+  port: 9411
